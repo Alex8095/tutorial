@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:include="fragments/layout :: head"></head>
+<body>
+	<div th:replace="fragments/layout :: header"></div>
+	<div class="container-fluid">
+		<div class="row">
+			<div th:replace="fragments/layout :: left"></div>
+			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+				<nav class="navbar navbar-default" role="navigation">
+				<div class="container-fluid">
+					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+						<ul class="nav navbar-nav">
+							<li><a href="../tutorials.html" th:href="@{/tutorials.html}" th:text="#{action.back}">back</a></li>
+						</ul>
+					</div>
+				</div>
+				</nav>
+
+				<h2>
+					<span th:if="${tutorial['new']}" th:remove="tag" th:text="#{status.new}">New </span> <span th:text="#{menu.tutorial}">tutorial</span>
+				</h2>
+
+				<form class="form-horizontal" th:object="${tutorial}" method="post" action="./tutorialDetails.html" th:action="@{${#httpServletRequest.servletPath}}">
+					<div class="form-group" th:classappend="${#fields.hasErrors('subject')} ? error">
+						<label class="col-sm-2 control-label" th:text="#{label_tutorial_subject}">subject</label>
+						<div class="col-sm-10">
+							<input class="form-control" type="text" th:field="*{subject}" /> <span class="help-inline" th:errors="*{subject}">[error]</span>
+						</div>
+					</div>
+
+					<div class="form-group" th:classappend="${#fields.hasErrors('description')} ? error">
+						<label class="col-sm-2 control-label" th:text="#{label_tutorial_description}">Description</label>
+						<div class="col-sm-10">
+							<input class="form-control" type="text" th:field="*{description}" /> <span class="help-inline" th:errors="*{description}">[error]</span>
+						</div>
+					</div>
+
+					<div class="form-group" th:classappend="${#fields.hasErrors('summary')} ? error">
+						<label class="col-sm-2 control-label" th:text="#{label_tutorial_summary}">summary</label>
+						<div class="col-sm-10">
+							<textarea class="form-control" rows="10" cols="5" th:field="*{summary}" />
+							<span class="help-inline" th:errors="*{summary}">[error]</span>
+						</div>
+					</div>
+
+					<div class="form-group" th:classappend="${#fields.hasErrors('category.id')} ? error">
+						<label class="col-sm-2 control-label" th:text="#{label_tutorial_category}">category</label>
+						<div class="col-sm-10">
+							<select class="form-control" th:field="*{category.id}">
+								<option value="" th:text="#{label_book}"></option>
+								<option th:each="dictionaryValue : ${dictionaryValues}" th:value="${dictionaryValue.id}" th:text="${dictionaryValue.name}">dictionaryValue.name</option>
+							</select> <span class="help-inline" th:errors="*{category.id}">[error]</span>
+						</div>
+					</div>
+
+					<div class="form-group" th:classappend="${#fields.hasErrors('book.id')} ? error">
+						<label class="col-sm-2 control-label" th:text="#{label_book}">book</label>
+						<div class="col-sm-10">
+							<select class="form-control" th:field="*{book.id}">
+								<option value="" th:text="#{label_book}"></option>
+								<option th:each="book: ${books}" th:value="${book.id}" th:text="${book.name}">book.name</option>
+							</select> <span class="help-inline" th:errors="*{book.id}">[error]</span>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-sm-offset-2 col-sm-10">
+							<button class="btn btn-default" th:if="${tutorial['new']}" type="submit" th:text="#{action.add}">add</button>
+							<button class="btn btn-default" th:unless="${tutorial['new']}" type="submit" th:text="#{action.update}">update</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

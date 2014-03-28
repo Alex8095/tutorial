@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapping>
+
+	<class name="com.frogorf.tutorial.domain.Tutorials">
+		<field name="tutorials" type="com.frogorf.tutorial.domain.Tutorial" collection="arraylist">
+			<bind-xml name="tutorial" />
+		</field>
+	</class>
+
+	<class name="com.frogorf.tutorial.domain.Tutorial" identity="id">
+
+		<map-to xml="tutorial" />
+
+		<field name="id" type="int">
+			<bind-xml name="id" node="element" />
+		</field>
+		<field name="subject" type="string">
+			<bind-xml name="subject" node="element" />
+		</field>
+		<field name="description" type="string">
+			<bind-xml name="description" node="element" />
+		</field>
+		<field name="summary" type="string">
+			<bind-xml name="summary" node="element" />
+		</field>
+
+	</class>
+</mapping>
